@@ -2,7 +2,7 @@
 #include <stdexcept>
 using namespace std;
 
-const int MAX_SIZE = 100;
+const int MAX_SIZE = INT_MAX;
 
 template <class T>
 class StackArray {

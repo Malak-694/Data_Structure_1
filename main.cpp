@@ -270,6 +270,7 @@ void merge_n(vector<T>& arr, int left, int mid, int right) {
 
     int i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
+        compare++;
         if (L[i] < R[j]) {
             arr[k] = L[i];
             i++;
@@ -322,6 +323,7 @@ void merge_g(vector<T>& arr, int left, int mid, int right) {
 
     int i = 0, j = 0, k = left;
     while (i < n1 && j < n2) {
+        compare++;
         if (L[i] > R[j]) {
             arr[k] = L[i];
             i++;

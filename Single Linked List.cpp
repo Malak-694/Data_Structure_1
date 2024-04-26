@@ -138,7 +138,7 @@ public:
         }
         else if(index > size-1 || index < 0){
             cout << "Index out of range" << endl;
-         }
+        }
         else{
             node<T> *prev = nullptr;
             node<T> *current = head;
@@ -289,9 +289,11 @@ int main() {
 
     myList.insertAtHead(5);
     myList.insertAtHead(10);
+    myList.insertAtHead(15);
 
     myList.insertAtTail(20);
     myList.insertAtTail(25);
+    myList.insertAtTail(30);
 
     myList.insertAt(100, 2);
 
@@ -300,7 +302,7 @@ int main() {
     myList.removeAt(3);
 
     myList.swap(7, 2);
-    myList.swap(0, 5);
+    myList.swap(0, 3);
     myList.swap(4, 1);
 
     cout << "Element at index 2: " << myList.retrieveAt(2) << endl;
@@ -308,6 +310,7 @@ int main() {
     myList.replaceAt(50, 1);
 
     cout << "Is 15 in the list? " << (myList.isExist(15) ? "Yes" : "No") << endl;
+    cout << "Is 50 in the list? " << (myList.isExist(50) ? "Yes" : "No") << endl;
 
     cout << "Is element at index 3 equal to 20? " << (myList.isItemAtEqual(20, 3) ? "Yes" : "No") << endl;
 
