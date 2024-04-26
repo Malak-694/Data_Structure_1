@@ -66,6 +66,7 @@ int main(){
     queue.enqueue(3);
     queue.enqueue(4);
     queue.print();
+    cout<<"\n";
     queue.dequeue();
     queue.dequeue();
     queue.enqueue(5);
@@ -74,7 +75,6 @@ int main(){
     queue.print();
     cout<<"\n";
     cout<<queue.First()<<" ";
-    cout<<"\n";
     queue.clear();
     cout<<"\n"<<queue.isEmpty()<<" "<<queue.queueSize();
 
