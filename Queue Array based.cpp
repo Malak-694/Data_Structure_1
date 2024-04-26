@@ -1,133 +1,83 @@
 #include <iostream>
-#include <cassert>
 using namespace std;
-
-class ArrayQueue
-{
-    int size{};
-    int front{0};
-    int rear{0};
-    int added_elements{};
-    int *array{};
-
+const int MAX=100;
+template <class T>
+class queue_array{
+    int first;
+    int length;
+    int last;
+    int size;
+    T queue[MAX];
 public:
-    // constructor
-    ArrayQueue(int size) : size(size)
-    {
-        array = new int[size];
+    queue_array(int s){
+        size=s;
+        first=0;
+        last=size-1;
+        length=0;
     }
-
-    // destructor
-    ~ArrayQueue()
-    {
-        delete[] array;
-    }
-
-    int next(int pos)
-    {
-        ++pos;
-        if (pos == size)
-            pos = 0;
-        return pos;
-        // return (pos+1)%size   //or shorter way
-    }
-    // add element
-    void enqueue(int value)
-    {
-        assert(!isFull());
-        array[rear] = value;
-        rear = next(rear);
-        added_elements++;
-    }
-
-    // delete
-    int dequeue()
-    {
-        assert(!isEmpty());
-        int value = array[front];
-        front = next(front);
-        --added_elements;
-        return value;
-    }
-
-    void display()
-    {
-        cout << "Front " << front << " - rear " << rear << "\t";
-        if (isFull())
-            cout << "full";
-        else if (isEmpty())
-        {
-            cout << "empty\n\n";
-            return;
+    void enqueue(T new_element){
+        if(length!=size){
+            last=(last+1)%size;
+            queue[last]=new_element;
+            length++;
+        }else{
+            throw runtime_error("Cannot enqueue to an queue that is full");
         }
-        cout << "\n";
+    }
+    T dequeue(){
+        if(length==0){
+            throw runtime_error("Cannot dequeue from an empty queue");
+        }else{
+            T left_element;
+            left_element=queue[first];
+            first=(first+1)%size;
+            length--;
+            return left_element;
+        }
+    }
+    T First(){
+        if(length!=0) {
+            return queue[first];
+        }else
+            throw runtime_error("the queue is empty");
 
-        for (int cur = front, step = 0; step < added_elements; ++step, cur = next(cur))
-            cout << array[cur] << " ";
-        cout << "\n\n";
+    }
+    void print() {
+        for (int i = first; i < first + length; i++) {
+            cout << queue[i % size] << " ";
+        }
     }
 
-    bool isEmpty()
-    {
-        return added_elements == 0;
+    bool isEmpty(){
+        if(length==0) return true;
+        else return false;
     }
-
-    bool isFull()
-    {
-        return added_elements == size;
+    int queueSize(){
+        return length;
+    }
+    void clear(){
+        length=0;
     }
 };
+int main(){
+    queue_array<int> queue(4);
+    queue.enqueue(1);
+    queue.enqueue(2);
+    queue.enqueue(3);
+    queue.enqueue(4);
+    queue.print();
+    queue.dequeue();
+    queue.dequeue();
+    queue.enqueue(5);
+    queue.enqueue(6);
 
-int main()
-{
-    ArrayQueue qu(6);
-    assert(qu.isEmpty());
-    qu.display();
+    queue.print();
+    cout<<"\n";
+    cout<<queue.First()<<" ";
+    cout<<"\n";
+    queue.clear();
+    cout<<"\n"<<queue.isEmpty()<<" "<<queue.queueSize();
 
-    for (int i = 1; i <= 6; i++)
-    {
-        assert(!qu.isFull());
-        qu.enqueue(i);
-        qu.display();
-    }
-    assert(qu.isFull());
 
-    for (int i = 1; i <= 6; ++i)
-    {
-        assert(!qu.isEmpty()); 
-        qu.dequeue();
-        // qu.display();
-    }
 
-    for (int i = 1; i <= 6; ++i)
-    {
-        assert(!qu.isFull());
-        qu.enqueue(i);
-        qu.display();
-    }
-
-    qu.dequeue();
-    assert(!qu.isFull());
-    qu.enqueue(7);
-    assert(qu.isFull());
-    qu.display();
-
-    qu.dequeue();
-    qu.dequeue();
-    assert(!qu.isFull());
-    qu.enqueue(8);
-    assert(!qu.isFull());
-    qu.display();
-    qu.enqueue(9);
-    assert(qu.isFull());
-    qu.display();
-
-    for (int i = 1; i <= 6; ++i)
-    {
-        assert(!qu.isEmpty());
-        qu.dequeue();
-        qu.display();
-    }
-
-    return 0;
 }

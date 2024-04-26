@@ -2,9 +2,10 @@
 using namespace std;
 
 // Define the node structure
+template <class T>
 struct node
 {
-  int data;   // Data
+  T data;   // Data
   node *next; // Pointer to the next node
 
   // Constructor
@@ -12,10 +13,11 @@ struct node
 };
 
 // Queue class
+template <class T>
 class Queue
 {
-  node *front; // Pointer to the start
-  node *rear;  // Pointer to the end
+  node<T> *front; // Pointer to the start
+  node<T> *rear;  // Pointer to the end
   int size;
 
 public:
@@ -31,7 +33,7 @@ public:
   // function to add an element to the queue
   void enqueue(int data)
   {
-    node *newNode = new node(data);
+    node<T> *newNode = new node<T>(data);
     // check if is empty,both front & rear =newNode
     if (isEmpty())
       front = rear = newNode;
@@ -58,7 +60,7 @@ public:
     int data = front->data;
 
     // Create a temporary pointer to the node at the front
-    node *tmp = front;
+    node<T> *tmp = front;
 
     // Move the front pointer to the next node (removing the current front node)
     front = front->next;
@@ -96,7 +98,7 @@ public:
     }
     else
     {
-      node *current = front;
+      node<T> *current = front;
       while (current)
       {
         cout << current->data << " "; // get data
@@ -104,6 +106,9 @@ public:
       }
       cout << endl;
     }
+  }
+  T First(){
+      if(!isEmpty()) return front->data;
   }
   //destructor
   ~Queue(){
@@ -114,7 +119,7 @@ public:
 int main()
 {
   // Test the Queue implementation
-  Queue q;
+  Queue<int> q;
   q.enqueue(1);
   q.enqueue(2);
   q.enqueue(3);
@@ -123,9 +128,10 @@ int main()
   cout << "The delete element is " << q.dequeue() << endl;
   cout << "The delete element is " << q.dequeue() << endl;
   q.print();
-  cout << q.isEmpty() << endl;
+  cout <<"is the queue empty? "<< q.isEmpty() << endl;
   q.enqueue(2);
-  cout << q.queueSize() << endl;
+  cout <<"the queue size: "<< q.queueSize() << endl;
+  cout<<"the first element: "<<q.First()<<"\n";
   q.clear();
   q.dequeue();
   q.print();
