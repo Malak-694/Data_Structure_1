@@ -13,6 +13,7 @@ class Student {
     double gpa;
 
 public:
+    Student() : id(""), name(""), gpa(0.0) {} // default constructor
     Student(string id, string name, double gpa) : id(id), name(name), gpa(gpa) {}
     string get_name() {
         return name;
@@ -346,11 +347,45 @@ void merge_g(vector<T>& arr, int left, int mid, int right) {
         k++;
     }
 }
+//-------------------------------//
 
+vector<Student> countSortByGPA(vector<Student>& students) {
+    int maxGpa = 0;
+    // Find the maximum GPA
+    for( auto& student : students) {
+        // Multiplying by 10 each GPA to two digits integer number to use it as an index in the counting array
+        maxGpa = max(maxGpa, static_cast<int>(student.get_gpa() * 10));
+    }
+
+    // Create counting array and initialize to zero
+    vector<int> count(maxGpa+1, 0);
+
+    // Count occurrences of each GPA
+    for(auto& student : students) {
+        // Multiply by 10 to get a whole number index for the counting array
+        count[static_cast<int>(student.get_gpa() * 10)]++;
+    }
+
+    // Modify the counting array to store the position of each GPA in the sorted array
+    for(int i = 1; i <= maxGpa; ++i) {
+        count[i] += count[i - 1];
+    }
+
+    // Create a sorted array of students
+    vector<Student> sortedStudents(students.size());
+    for(int i = students.size() - 1; i >= 0; --i) {
+        // Decrementing by 1 to convert to zero-based indexing
+        sortedStudents[count[static_cast<int>(students[i].get_gpa() * 10)] - 1] = students[i];
+
+        count[static_cast<int>(students[i].get_gpa() * 10)]--;
+    }
+
+    return sortedStudents;
+}
 int main() {
-    ifstream file("D:\\butterfly\\data_structure_assignment1\\example"); // Open the file "example.txt" for reading
-    ofstream SortedByGPA("D:\\butterfly\\data_structure_assignment1\\SortedByGPA.txt");
-    ofstream SortedByName("D:\\butterfly\\data_structure_assignment1\\SortedByName.txt");
+    ifstream file("D:\\butterfly\\Data_Structure_1\\example"); // Open the file "example.txt" for reading
+    ofstream SortedByGPA("D:\\butterfly\\Data_Structure_1\\SortedByGPA.txt");
+    ofstream SortedByName("D:\\butterfly\\Data_Structure_1\\SortedByName.txt");
     // Check if the file is opened successfully
     if (!file.is_open()) {
         cout << "Failed to open the file." << endl;
@@ -578,7 +613,24 @@ int main() {
         SortedByName<< "\n\n";
     }
     SortedByName<<"\n***************************\n";
-    /////////////////////////////////
+    ////////////////////////////////
+    SortedByGPA<< "Algorithm: Count Sort\n";
+    start = high_resolution_clock::now();
+
+    vector<Student> gpa_count= countSortByGPA(students);
+
+    stop = high_resolution_clock::now();
+    duration = duration_cast<nanoseconds>(stop - start);
+
+    SortedByGPA<< "Running Time:" << duration.count() << " nanoseconds\n";
+    SortedByGPA<< compare << "\n";
+    compare=0;
+    for (int i = size-1; i >=0 ; i--) {
+        SortedByGPA<< gpa_count[i].get_name() << "\n" << gpa_count[i].get_id() << "\n" << gpa_count[i].get_gpa();
+        SortedByGPA<< "\n\n";
+    }
+    SortedByGPA<<"*************************\n";
+    ////////////////////////////////////////
     // Close the file
     // Close the file
     file.close();
