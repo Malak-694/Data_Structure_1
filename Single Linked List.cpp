@@ -312,34 +312,34 @@ public:
 };
 
 int main() {
-    singleLinkedlist<string> myList;
+  singleLinkedlist<int> myList;
 
-    myList.insertAtHead("apple");
-    myList.insertAtHead("banana");
-    myList.insertAtHead("orange");
+    myList.insertAtHead(5);
+    myList.insertAtHead(10);
+    myList.insertAtHead(15);
 
-    myList.insertAtTail("grapes");
-    myList.insertAtTail("pineapple");
-    myList.insertAtTail("watermelon");
+    myList.insertAtTail(20);
+    myList.insertAtTail(25);
+    myList.insertAtTail(30);
 
-    myList.insertAt("kiwi", 2);
+    myList.insertAt(100, 2);
 
     myList.removeAtHead();
 
     myList.removeAt(3);
 
+    myList.swap(7, 2);
+    myList.swap(0, 3);
     myList.swap(4, 1);
-    myList.swap(0, 1);
-    myList.swap(4, 3);
 
     cout << "Element at index 2: " << myList.retrieveAt(2) << endl;
 
-    myList.replaceAt("strawberry", 1);
+    myList.replaceAt(50, 1);
 
-    cout << "Is 'orange' in the list? " << (myList.isExist("orange") ? "Yes" : "No") << endl;
-    cout << "Is 'strawberry' in the list? " << (myList.isExist("strawberry") ? "Yes" : "No") << endl;
+    cout << "Is 15 in the list? " << (myList.isExist(15) ? "Yes" : "No") << endl;
+    cout << "Is 50 in the list? " << (myList.isExist(50) ? "Yes" : "No") << endl;
 
-    cout << "Is element at index 3 equal to 'grapes'? " << (myList.isItemAtEqual("grapes", 3) ? "Yes" : "No") << endl;
+    cout << "Is element at index 3 equal to 20? " << (myList.isItemAtEqual(20, 3) ? "Yes" : "No") << endl;
 
     cout << "Is the list empty? " << (myList.isEmpty() ? "Yes" : "No") << endl;
 
