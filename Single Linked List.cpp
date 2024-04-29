@@ -138,7 +138,7 @@ public:
         }
         else if(index > size-1 || index < 0){
             cout << "Index out of range" << endl;
-        }
+         }
         else{
             node<T> *prev = nullptr;
             node<T> *current = head;
@@ -221,6 +221,7 @@ public:
         else if (firstItemIdx == secondItemIdx){
             return;
         }
+
         node<T>* curfir = head;
         node<T>* prefir = nullptr;
         node<T>* cursec = head;
@@ -233,30 +234,56 @@ public:
             presec = cursec;
             cursec = cursec->next;
         }
+        if(firstItemIdx == secondItemIdx+1 || secondItemIdx == firstItemIdx+1){
+            if (firstItemIdx < secondItemIdx){
+                if (prefir != nullptr){
+                    prefir->next = cursec;
+                }
+                else{
+                    head = cursec;
+                }
+                curfir->next = cursec->next;
+                cursec->next = curfir;
 
-        node<T>* temp = cursec->next;
-        cursec->next = curfir->next;
-        curfir->next = temp;
+            }
+            else{
+                if (presec != nullptr){
+                    presec->next = curfir;
+                }
+                else{
+                    head = curfir;
+                }
+                cursec->next = curfir->next;
+                curfir->next = cursec;
+            }
 
-        if (prefir != nullptr){
-            prefir->next = cursec;
         }
+
         else{
-            head = cursec;
-        }
+            node<T>* temp = cursec->next;
+            cursec->next = curfir->next;
+            curfir->next = temp;
 
-        if (presec != nullptr){
-            presec->next = curfir;
-        }
-        else{
-            head = curfir;
-        }
+            if (prefir != nullptr){
+                prefir->next = cursec;
+            }
+            else{
+                head = cursec;
+            }
 
-        if (cursec->next == nullptr){
-            tail = cursec;
-        }
-        else if (curfir->next == nullptr){
-            tail = curfir;
+            if (presec != nullptr){
+                presec->next = curfir;
+            }
+            else{
+                head = curfir;
+            }
+
+            if (cursec->next == nullptr){
+                tail = cursec;
+            }
+            else if (curfir->next == nullptr){
+                tail = curfir;
+            }
         }
     }
 // is empty
@@ -285,34 +312,34 @@ public:
 };
 
 int main() {
-    singleLinkedlist<int> myList;
+    singleLinkedlist<string> myList;
 
-    myList.insertAtHead(5);
-    myList.insertAtHead(10);
-    myList.insertAtHead(15);
+    myList.insertAtHead("apple");
+    myList.insertAtHead("banana");
+    myList.insertAtHead("orange");
 
-    myList.insertAtTail(20);
-    myList.insertAtTail(25);
-    myList.insertAtTail(30);
+    myList.insertAtTail("grapes");
+    myList.insertAtTail("pineapple");
+    myList.insertAtTail("watermelon");
 
-    myList.insertAt(100, 2);
+    myList.insertAt("kiwi", 2);
 
     myList.removeAtHead();
 
     myList.removeAt(3);
 
-    myList.swap(7, 2);
-    myList.swap(0, 3);
     myList.swap(4, 1);
+    myList.swap(0, 1);
+    myList.swap(4, 3);
 
     cout << "Element at index 2: " << myList.retrieveAt(2) << endl;
 
-    myList.replaceAt(50, 1);
+    myList.replaceAt("strawberry", 1);
 
-    cout << "Is 15 in the list? " << (myList.isExist(15) ? "Yes" : "No") << endl;
-    cout << "Is 50 in the list? " << (myList.isExist(50) ? "Yes" : "No") << endl;
+    cout << "Is 'orange' in the list? " << (myList.isExist("orange") ? "Yes" : "No") << endl;
+    cout << "Is 'strawberry' in the list? " << (myList.isExist("strawberry") ? "Yes" : "No") << endl;
 
-    cout << "Is element at index 3 equal to 20? " << (myList.isItemAtEqual(20, 3) ? "Yes" : "No") << endl;
+    cout << "Is element at index 3 equal to 'grapes'? " << (myList.isItemAtEqual("grapes", 3) ? "Yes" : "No") << endl;
 
     cout << "Is the list empty? " << (myList.isEmpty() ? "Yes" : "No") << endl;
 
